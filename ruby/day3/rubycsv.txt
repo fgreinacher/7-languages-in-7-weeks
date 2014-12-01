@@ -1,0 +1,3 @@
+singular, plural
+house, houses
+mouse, mice
