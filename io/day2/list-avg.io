@@ -3,7 +3,7 @@ List avg := method(
     sum := 0
     self foreach(item,
         if(item isKindOf(Number) == false,
-            continue
+            Exception raise("All items must be numbers")
         ) 
         sum = sum + item
     )
