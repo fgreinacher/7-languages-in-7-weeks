@@ -1,34 +1,32 @@
-Matrix := List clone
-
-Matrix dim := method(x, y, 
-    self x := x
-    self y := y
-    for(i, 0, y, 
-        inner := List clone
-        for(ii, 0, x,
-            inner push(nil)
-        )
-        self  push(inner)
-    )
-)
-
-Matrix set := method(x, y, value,
-    self at(y) atPut(x, value)
-)
-
-Matrix get := method(x, y,
-    self at(y) at(x)
-)
-
-Matrix transpose := method(
-    newMatrix := self clone
-    newMatrix dim(self y, self x)
-    for(ix, 0, self x,
-        for(iy, 0, self y,
-            newMatrix set(iy, ix, self get(ix, iy))
+Matrix := List clone do (
+    dim := method(x, y, 
+        self x := x
+        self y := y
+        for(i, 0, y, 
+            inner := List clone
+            for(ii, 0, x, inner push(nil))
+            self push(inner)
         )
     )
-    newMatrix
+    
+    set := method(x, y, value,
+        self at(y) atPut(x, value)
+    )
+
+    get := method(x, y,
+        self at(y) at(x)
+    )
+    
+    transpose := method(
+        newMatrix := self clone
+        newMatrix dim(self y, self x)
+        for(ix, 0, self x,
+            for(iy, 0, self y,
+                newMatrix set(iy, ix, self get(ix, iy))
+            )
+        )
+        newMatrix
+    )
 )
 
 m := Matrix clone
