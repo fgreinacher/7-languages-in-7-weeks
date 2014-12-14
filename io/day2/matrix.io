@@ -1,20 +1,21 @@
-Matrix := List clone do (
+Matrix := Object clone do (
     dim := method(x, y, 
         self x := x
         self y := y
+        self data := List clone
         for(i, 0, y, 
             inner := List clone
             for(ii, 0, x, inner push(nil))
-            self push(inner)
+            self data push(inner)
         )
     )
     
     set := method(x, y, value,
-        self at(y) atPut(x, value)
+        self data at(y) atPut(x, value)
     )
 
     get := method(x, y,
-        self at(y) at(x)
+        self data at(y) at(x)
     )
     
     transpose := method(
@@ -41,6 +42,12 @@ tm := m transpose
 
 writeln(m get(1, 5))
 writeln(tm get(5, 1))
+
+File with("matrix.data") open write(m serialized) close
+
+m2 := doRelativeFile("matrix.data")
+
+writeln(m get(1, 5), " => ", m2 get(1, 5))
 
 
 
