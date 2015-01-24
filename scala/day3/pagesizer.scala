@@ -5,10 +5,20 @@ import Actor._
 def pageSize(url: String) = Source.fromURL(url).mkString.length
 
 def printPageSizes(urls: Iterable[String]) = {
+    var caller = self
+    
     for(url <- urls) {
-        println("Loading " + url + "...")
-        val ps = pageSize(url)
-        println(url + " -> " + ps)
+        actor {
+            println("Loading " + url + "...")
+            caller ! (url,  pageSize(url))
+        }
+    }
+
+    for(i <- 1 to urls.size) {
+        receive {
+            case (url, size) =>
+                println(url + " -> " + size)
+        }
     }
 }
 
