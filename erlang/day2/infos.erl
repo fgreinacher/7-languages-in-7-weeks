@@ -3,12 +3,14 @@
 
 find(Keyword, Data) -> 
     lists:nth(
-        1,
-        lists:map(
-            fun({_,V}) -> V end, 
-            lists:filter(
-                fun({K,_}) -> K == Keyword end, 
-                Data
-            )
+        1, 
+        lists:filtermap(
+            fun({K, V}) -> 
+                case K of 
+                    Keyword -> {true, V}; 
+                    _ -> false 
+                end 
+            end, 
+            Data
         )
     ).
